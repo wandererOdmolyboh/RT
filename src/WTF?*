@@ -1,0 +1,12 @@
+int i = 0;
+			int r,g,b;
+			int tmp;
+			while (HEIGH * WIDTH > i)
+			{
+				tmp = img.pixels[i];
+				r = ((tmp >> 16) * .393) + ((tmp >> 8) *.769) + (tmp * .189);
+				g = ((tmp >> 16) * .349) + ((tmp >> 8) *.686) + (tmp * .168);
+				b = ((tmp >> 16) * .272) + ((tmp >> 8) *.534) + (tmp * .131);
+				img.pixels[i] = get_color(r, g, b);
+				i++;
+			}
