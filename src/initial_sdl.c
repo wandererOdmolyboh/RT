@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initial_sdl.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wanderer <wanderer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmolyboh <dmolyboh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 23:45:44 by wanderer          #+#    #+#             */
-/*   Updated: 2019/08/16 13:42:43 by wanderer         ###   ########.fr       */
+/*   Updated: 2019/08/19 11:53:45 by dmolyboh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ t_object		*init_value_o(char *name)
 	obj->r = 0.0;
 	obj->k = 0.4;
 	obj->specular = 0.0;
-	obj->reflective = 0.1;
+	obj->reflective = 0;
 	obj->next = NULL;
 	return (obj);
 }

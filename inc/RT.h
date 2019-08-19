@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RT.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wanderer <wanderer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmolyboh <dmolyboh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/01 13:59:25 by wanderer          #+#    #+#             */
-/*   Updated: 2019/08/16 13:32:30 by wanderer         ###   ########.fr       */
+/*   Updated: 2019/08/19 10:55:01 by dmolyboh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include "SDL2/SDL.h"
-# include "SDL2/SDL_image.h"
-// # include "SDL2_image/SDL_image.h"
+// # include "SDL2/SDL_image.h"
+# include "SDL2_image/SDL_image.h"
+
+# include "../parson/parson.h"
 # include "../libft/libft.h"
 
 # define WIDTH 700
@@ -51,6 +53,7 @@ typedef struct s_ret_obj_s		t_ret_obj_s;
 typedef struct s_cam			t_cam;
 typedef t_object				*t_creator_list_obj(char *s, char *name);
 typedef t_light					*t_creator_list_l(char *s, char *name);
+typedef double	t_v				__attribute__((__ext_vector_type__(3)));
 
 struct							s_dcrm
 {

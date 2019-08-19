@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wanderer <wanderer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmolyboh <dmolyboh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/01 13:59:33 by wanderer          #+#    #+#             */
-/*   Updated: 2019/08/16 14:29:40 by wanderer         ###   ########.fr       */
+/*   Updated: 2019/08/19 18:08:17 by dmolyboh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,12 @@ int			main(int argc, char **argv)
 {
 	t_rtv		rtv;
 	t_img		img;
-	
-
+	// t_v v;
+	JSON_Value *shema;
+	// JSON_Status nummber;
+	// JSON_Value * t;
+	shema = json_parse_file(argv[1]);
+	// JSON_Status json_validate(const JSON_Value *schema, const JSON_Value *value);
 	if (argc < 2 || initial_sdl(&rtv, &img) == -1)
 		return (leakers(&rtv, &img, argc, argv[0]));
 	rtv.cam = init_value_c();
@@ -80,37 +84,7 @@ int			main(int argc, char **argv)
 		Update_ecran(&rtv, &img);
 		if (SDL_PollEvent(&rtv.sdlka.event) && (rtv.sdlka.event.type
 		== SDL_QUIT || rtv.sdlka.event.key.keysym.sym == SDLK_ESCAPE))
-		{
-			printf("A\n");
-			break ;
-		}
-		if (rtv.sdlka.event.key.keysym.sym == SDLK_c)
-		{
-
-			to_zero_buffer(&img);
-		}
-		if (rtv.sdlka.event.key.keysym.sym == SDLK_SPACE)
-		{
-			rtv.sdlka.surf->pixels = img.pixels;
-			IMG_SavePNG(rtv.sdlka.surf, "t.png");
-		}
-		if (rtv.sdlka.event.key.keysym.sym == SDLK_v)
-		{
-			// Сделать чтообы сработало 1 раз
-			int i = 0;
-			double r,g,b;
-			int tmp;
-			while (HEIGH * WIDTH > i)
-			{
-				tmp = img.pixels[i];
-				r = (((tmp >> 16) & 0xFF) * 0.393) + (((tmp >> 8) & 0xFF) *0.769) + ((tmp & 0xFF) * 0.189);
-				g = (((tmp >> 16) & 0xFF) * 0.349) + (((tmp >> 8) & 0xFF) *0.686) + ((tmp & 0xFF) * 0.168);
-				b = (((tmp >> 16) & 0xFF) * 0.272) + (((tmp >> 8) & 0xFF) *0.534) + ((tmp & 0xFF) * 0.131);
-				img.pixels[i] = get_color((int)r, (int)g, (int)b);
-				i++;
-			}
-			printf("Aaaa %d 	%d\n", HEIGH * WIDTH, i);
-		}
+			break ; 
 		
 		rtv.sdlka.event.key.keysym.sym = 0;
 	}
