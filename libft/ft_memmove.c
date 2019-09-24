@@ -3,32 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmolyboh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mhonchar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/03 15:46:40 by dmolyboh          #+#    #+#             */
-/*   Updated: 2018/11/06 17:38:01 by dmolyboh         ###   ########.fr       */
+/*   Created: 2018/10/24 21:01:58 by mhonchar          #+#    #+#             */
+/*   Updated: 2018/10/27 20:45:39 by mhonchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
+#include "libft.h"
 
-void	*ft_memmove(void *dst, const void *src, size_t len)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	unsigned char		*dst1;
-	const unsigned char	*src1;
-	size_t				carta;
+	size_t				i;
+	const unsigned char	*uc_src;
+	unsigned char		*uc_dest;
 
-	dst1 = dst;
-	src1 = src;
-	carta = 0;
-	if (dst1 < src1)
-		while (len > carta)
+	uc_src = src;
+	uc_dest = dest;
+	if (uc_dest < uc_src)
+	{
+		i = 0;
+		while (i < n)
 		{
-			dst1[carta] = src1[carta];
-			carta++;
+			uc_dest[i] = uc_src[i];
+			i++;
 		}
-	else
-		while (len--)
-			dst1[len] = src1[len];
-	return ((unsigned char *)(dst));
+	}
+	else if (uc_dest > uc_src)
+	{
+		i = n;
+		while (i > 0)
+		{
+			uc_dest[i - 1] = uc_src[i - 1];
+			i--;
+		}
+	}
+	return (dest);
 }

@@ -1,76 +1,132 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: mhonchar <mhonchar@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2019/05/15 19:28:21 by mhonchar          #+#    #+#              #
+#    Updated: 2019/09/20 17:38:30 by mhonchar         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-NAME		= RTv1
+NAME = RTv1
+LIBFT_NAME = libft.a
+LIBPARSON_NAME = libparson.a
+SRC_DIR = src/
+OBJ_DIR = obj/
+INC_DIR = includes/
+FRM_DIR = frameworks
+LIBFT_DIR = libft/
+LIBPARSON_DIR = libparson/
+LIB = 	$(addprefix $(LIBFT_DIR), $(LIBFT_NAME)) \
+		$(addprefix $(LIBPARSON_DIR), $(LIBPARSON_NAME)) 
 
-#	compiler
-CC			= gcc
-FLAGS		= -Wall -Wextra -Werror -fsanitize=address
 
-#	files
-SRC			=  closestintersection.c  create_list_l.c get_next_line.c intersect_objct.c  main.c  oper_w_color.c oper_w_vector.c \
-pass_list.c trace_ray.c ft_atof.c error_manegmant.c camera.c rotaror.c\
-computelighting.c create_list_obj.c initial_sdl.c  leaks.c normal.c oper_w_img.c\
-reader.c
+SRC_FILES =		cn_mainloop.c \
+				key_hooks.c \
+				pr_fields2.c \
+				pr_objs.c \
+				rt_cone.c \
+				rt_light.c \
+				rt_plane.c \
+				rt_tx_texture.c \
+				sdl_clean.c \
+				anti_aliasing.c \
+				color_disruptions.c \
+				color_disruptions_.c \
+				main.c \
+				pr_fields3.c \
+				rt_clean.c \
+				rt_cut_and_sort_roots.c \
+				rt_main.c \
+				rt_rotation.c \
+				rt_utils.c \
+				rt_utils_.c \
+				sdl_init.c \
+				cam_matrix_rotation.c \
+				draw_line.c \
+				main_loop.c \
+				pr_fields4.c \
+				rt_color.c \
+				rt_cylinder.c \
+				rt_parabaloid.c \
+				rt_sphere.c \
+				rt_vec_op_utils.c \
+				window.c \
+				cn_canvas.c \
+				er_error_handler.c \
+				pr_fields.c \
+				pr_lights.c \
+				rt_compose_obj.c \
+				rt_figure_defenetion.c \
+				rt_parse.c \
+				rt_threader.c \
+				rt_visual_effects.c \
+				rt_shadows.c \
+				rt_update.c
+				
+HEADERS = 		$(INC_DIR)canvas.h \
+				$(INC_DIR)error_handler.h \
+				$(INC_DIR)window.h \
+				$(LIBFT_DIR)/libft.h 
 
-#	directories
-INC_DIR		= ./inc/
-OBJ_DIR		= ./obj/
-SRC_DIR		= ./src/
-FRM_DIR		= frameworks
+SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
+OBJ = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
 
-OBJ			= $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
+CC = gcc -g
+CFLAGS = -Wall -Werror -Wextra -flto -Ofast -pipe
+INC = 	-I $(INC_DIR) \
+		-I libft \
+		-I libparson \
+		-I $(CURDIR)/$(FRM_DIR)/SDL2.framework/⁨Versions⁩/A/Headers \
+		-I $(CURDIR)/$(FRM_DIR)/SDL2_image.framework/Versions⁩/A/Headers \
+		-F $(CURDIR)/$(FRM_DIR)
 
-#	ft library
-FT_P		= ./parson/
-FT			= ./libft/
-FT_P_LIB	= $(addprefix $(FT_P), libparson.a)
-FT_LIB		= $(addprefix $(FT), libft.a)
-FT_INC		= -I $(FT)
-FT_LNK		= -L $(FT) -lft
-FT_P_INC	= -I $(FT_P)
-FT_P_LNK	= -L $(FT_P) -lft
 
-#	SDL
-UNAME_S = $(shell uname -s)
-ifeq ($(UNAME_S), Linux)
-	SDL_LNK	= -l SDL2 -l SDL2_image 
-else
-	SDL_INC	= -I $(CURDIR)/$(FRM_DIR)/SDL2.framework/Headers \
-				-I $(CURDIR)/$(FRM_DIR)/SDL2_image.framework/Headers \
-				-F $(CURDIR)/$(FRM_DIR)
+SDL_LNK	= -F $(CURDIR)/$(FRM_DIR) \
+			-rpath $(CURDIR)/$(FRM_DIR) \
+			-framework SDL2 -framework SDL2_image 
 
-	SDL_LNK	= -F $(CURDIR)/$(FRM_DIR) \
-				-rpath $(CURDIR)/$(FRM_DIR) \
-				-framework SDL2 -framework SDL2_image 
-endif
 
-all: obj $(FT_LIB) $(FT_P_LIB) $(NAME)
+C_RED = \033[31m
+C_GREEN = \033[32m
+C_MAGENTA = \033[35m
+C_NONE = \033[0m
 
-obj:
-	@mkdir -p $(OBJ_DIR)
+all: $(NAME)
 
-$(FT_LIB):
-	@make -C $(FT)
-	@make -C $(FT_P)
+$(NAME): $(LIBFT_NAME) $(LIBPARSON_NAME) $(HEADERS) $(OBJ_DIR) $(OBJ)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIB) $(INC) $(SDL_LNK) -o $(NAME)
+	@printf "$(C_MAGENTA)$(NAME):$(C_NONE) %-25s$(C_GREEN)[done]$(C_NONE)\n" $@
 
-$(OBJ_DIR)%.o:$(SRC_DIR)%.c
-	@$(CC) $(FLAGS) -I $(INC_DIR) $(FT_INC) $(FT_P_INC) $(SDL_INC) -o $@ -c $<
-	@echo "(+) $@"
+$(LIBFT_NAME):
+	@make -C $(LIBFT_DIR)
 
-$(NAME):$(OBJ)
-	@$(CC) $(FLAGS) $(OBJ) $(FT_LNK) $(FT_P_LNK) -I $(INC_DIR) $(SDL_INC) $(SDL_LNK)\
-	 -lm -o $(NAME)
-	@echo "$(NAME) ready to win!"
+$(LIBPARSON_NAME):
+	@make -C $(LIBPARSON_DIR)
+
+$(OBJ_DIR):
+	@mkdir obj
+	@printf "$(C_MAGENTA)$(NAME):$(C_NONE) %-25s$(C_GREEN)[done]$(C_NONE)\n" $@
+
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS)
+	@$(CC) $(CFLAGS) -c $(INC) $< -o $@
+	@printf "$(C_MAGENTA)$(NAME):$(C_NONE) %-25s$(C_GREEN)[done]$(C_NONE)\n" $@
 
 clean:
-	@rm -rf $(OBJ_DIR)
-	@make -C $(FT) clean
-	@make -C $(FT_P) clean
+	@rm -rf $(OBJ_DIR)*
+	@make clean -C $(LIBFT_DIR)
+	@make clean -C $(LIBPARSON_DIR)
+	@printf "$(C_MAGENTA)$(NAME):$(C_NONE) %-25s$(C_RED)[done]$(C_NONE)\n" $@
 
 fclean: clean
-	@rm -f $(NAME)
-	@make -C $(FT) fclean
-	@make -C $(FT_P) fclean
+	@rm -rf $(NAME)
+	@make fclean -C $(LIBFT_DIR)
+	@make fclean -C $(LIBPARSON_DIR)
+	@printf "$(C_MAGENTA)$(NAME):$(C_NONE) %-25s$(C_RED)[done]$(C_NONE)\n" $@
 
 re: fclean all
 
-.PHONY: all clean fclean re
+norm:
+	@norminette $(SRC) $(HEADERS)

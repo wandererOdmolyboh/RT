@@ -3,36 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmolyboh <dmolyboh@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: mhonchar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/12 15:39:56 by dmolyboh          #+#    #+#             */
-/*   Updated: 2018/11/18 19:37:00 by dmolyboh         ###   ########.fr       */
+/*   Created: 2018/10/28 20:08:25 by mhonchar          #+#    #+#             */
+/*   Updated: 2018/10/28 20:48:10 by mhonchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+static int	ft_is_space(char s)
+{
+	return (s == ' ' || s == '\n' || s == '\t');
+}
+
 char		*ft_strtrim(char const *s)
 {
-	char	*ss;
-	size_t	i;
-	size_t	j;
-	size_t	len;
+	char	*sub;
+	size_t	start;
+	size_t	end;
 
-	i = 0;
-	j = 0;
-	if (s == NULL)
+	if (!s)
 		return (NULL);
-	if (*s == '\0')
-		return ((char *)s);
-	len = ft_strlen((char *)s) - 1;
-	while ((s[i] == ' ' || s[i] == '\n' || s[i] == '\t') && i < len)
-		i++;
-	while ((s[len] == ' ' || s[len] == '\n' || s[len] == '\t') && len >= i)
-		len--;
-	if ((ss = ft_memalloc(len - i + 2)) == NULL)
-		return (ss);
-	while (i <= len)
-		ss[j++] = s[i++];
-	return (ss);
+	start = 0;
+	while (ft_is_space(s[start]) && s[start] != '\0')
+		start++;
+	if (s[start] == '\0')
+	{
+		if (!(sub = (char *)(malloc(1))))
+			return (NULL);
+		sub[0] = '\0';
+		return (sub);
+	}
+	end = ft_strlen(s);
+	while (end != 0 && ft_is_space(s[end - 1]))
+		end--;
+	return (ft_strsub(s, start, end - start));
 }

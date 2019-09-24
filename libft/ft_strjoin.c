@@ -3,35 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmolyboh <dmolyboh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhonchar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/06 11:31:26 by dmolyboh          #+#    #+#             */
-/*   Updated: 2018/12/09 01:43:55 by dmolyboh         ###   ########.fr       */
+/*   Created: 2018/10/28 19:14:35 by mhonchar          #+#    #+#             */
+/*   Updated: 2018/10/28 19:19:41 by mhonchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char			*dest;
-	unsigned int	i;
+	char	*sub;
+	size_t	i;
+	size_t	len1;
+	size_t	len2;
 
-	if (s2 == NULL && s1 == NULL)
+	if (!s1 || !s2)
 		return (NULL);
-	else if (!s1)
-		return (ft_strdup(s2));
-	else if (!s2)
-		return (ft_strdup(s1));
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	if (!(sub = (char *)malloc(len1 + len2 + 1)))
+		return (NULL);
 	i = 0;
-	dest = (char*)malloc(sizeof(*dest) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (dest == NULL)
-		return (NULL);
-	while (*s1 != '\0')
-		dest[i++] = *s1++;
-	while (*s2 != '\0')
-		dest[i++] = *s2++;
-	dest[i] = '\0';
-	return (dest);
+	while (i < len1)
+	{
+		sub[i] = s1[i];
+		i++;
+	}
+	i = 0;
+	while (i < len2)
+	{
+		sub[i + len1] = s2[i];
+		i++;
+	}
+	sub[len1 + len2] = '\0';
+	return (sub);
 }

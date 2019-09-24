@@ -3,40 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmolyboh <dmolyboh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhonchar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/30 13:34:37 by dmolyboh          #+#    #+#             */
-/*   Updated: 2019/08/01 16:22:13 by dmolyboh         ###   ########.fr       */
+/*   Created: 2018/08/13 21:23:54 by mhonchar          #+#    #+#             */
+/*   Updated: 2018/10/27 19:12:20 by mhonchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strstr(const char *haystack, const char *needle)
+static	int	finder(const char *str, const char *to_find)
 {
-	int nr[3];
+	int i;
+	int p;
 
-	nr[0] = 0;
-	if (ft_strlen((char *)needle) == 0)
-		return ((char *)haystack);
-	if (haystack == NULL || needle == NULL)
-		return (NULL);
-	while (haystack[nr[0]] || haystack[nr[0]] == '\0')
+	i = 0;
+	p = 0;
+	while (to_find[i] != '\0')
 	{
-		nr[2] = nr[0];
-		nr[1] = 0;
-		if (needle[nr[1]] == haystack[nr[0]])
-			while (needle[nr[1]] == haystack[nr[0]]
-					&& (needle[nr[1]] != '\0' || haystack[nr[0]] != '\0'))
-			{
-				nr[0]++;
-				nr[1]++;
-			}
-		nr[0] = nr[2];
-		if (needle[nr[1]] == '\0')
-			return ((char *)(haystack + nr[0]));
-		if (!haystack[nr[0]++])
-			return (NULL);
+		if (str[i] == to_find[i])
+			p++;
+		else
+			return (0);
+		i++;
 	}
-	return (NULL);
+	if (p == i)
+		return (1);
+	else
+		return (0);
+}
+
+char		*ft_strstr(const char *str, const char *to_find)
+{
+	if (to_find[0] == '\0')
+		return ((char *)str);
+	while (*str != '\0')
+	{
+		if (finder(str, to_find))
+			return ((char*)str);
+		str++;
+	}
+	return (0);
 }

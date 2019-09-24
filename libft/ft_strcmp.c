@@ -3,27 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmolyboh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mhonchar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/30 16:06:43 by dmolyboh          #+#    #+#             */
-/*   Updated: 2018/11/14 22:54:57 by dmolyboh         ###   ########.fr       */
+/*   Created: 2018/10/27 18:00:33 by mhonchar          #+#    #+#             */
+/*   Updated: 2018/10/28 16:57:33 by mhonchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strcmp(const char *string1, const char *string2)
-{
-	int i;
+#include "libft.h"
 
+int						ft_strcmp(const char *s1, const char *s2)
+{
+	unsigned const char	*str1;
+	unsigned const char	*str2;
+	size_t				i;
+
+	str1 = (unsigned const char *)s1;
+	str2 = (unsigned const char *)s2;
 	i = 0;
-	while (string1[i] != '\0' || string2[i] != '\0')
+	while (str1[i] != '\0' && str2[i] != '\0')
 	{
-		if (string1[i] < string2[i] || string1[i] > string2[i])
-			return ((unsigned char)string1[i] - (unsigned char)string2[i]);
+		if (str1[i] != str2[i])
+			return (str1[i] - str2[i]);
 		i++;
 	}
-	if (string1[i] != '\0')
-		return (1);
-	else if (string2[i] != '\0')
-		return (-1);
-	return (0);
+	if (str1[i] == str2[i])
+		return (0);
+	else
+		return (str1[i] - str2[i]);
 }

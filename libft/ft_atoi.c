@@ -3,38 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmolyboh <dmolyboh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhonchar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/26 01:07:41 by dmolyboh          #+#    #+#             */
-/*   Updated: 2019/07/20 21:57:21 by dmolyboh         ###   ########.fr       */
+/*   Created: 2018/08/14 21:54:22 by mhonchar          #+#    #+#             */
+/*   Updated: 2018/10/28 17:05:31 by mhonchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_atoi(const char *str)
+#include "libft.h"
+
+int			ft_atoi(const char *str)
 {
 	int				i;
-	unsigned long	a;
-	int				d;
+	long long int	result;
+	int				sign;
 
 	i = 0;
-	a = 0;
-	d = 1;
-	while (str[i] == 32 || (str[i] <= 13 && str[i] >= 9))
+	sign = 1;
+	result = 0;
+	while (ft_iswhitespace(str[i]))
 		i++;
-	if (str[i] == 43 || str[i] == 45)
+	if (str[i] == '-' || str[i] == '+')
 	{
-		if (str[i] == 45)
-			d = -1;
+		if (str[i] == '-')
+			sign = -sign;
 		i++;
 	}
-	while ((str[i] >= 48 && str[i] <= 57))
+	while (ft_isdigit(str[i]))
 	{
-		a = a * 10 + (int)str[i] - 48;
+		result += str[i] - '0';
+		if (ft_isdigit(str[i + 1]))
+			result *= 10;
 		i++;
-		if (a >= 9223372036854775807 && d == 1)
-			return (-1);
-		else if (a > 9223372036854775807 && d == -1)
-			return (0);
 	}
-	return (int)(a * d);
+	return ((int)(result * sign));
 }

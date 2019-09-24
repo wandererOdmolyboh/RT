@@ -3,43 +3,95 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dmolyboh <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: mhonchar <mhonchar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/10/25 18:03:03 by dmolyboh          #+#    #+#              #
-#    Updated: 2018/12/08 15:23:28 by dmolyboh         ###   ########.fr        #
+#    Created: 2018/10/24 18:09:23 by mhonchar          #+#    #+#              #
+#    Updated: 2019/09/11 18:41:16 by mhonchar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FLAGS = -Wall -Wextra -Werror
-
 NAME = libft.a
 
-SRCC = ft_atoi.c ft_bzero.c ft_foreach.c ft_isalnum.c ft_isalpha.c\
-ft_isascii.c ft_isdigit.c ft_isprint.c ft_itoa.c ft_lstadd.c ft_lstdel.c\
-ft_lstdelone.c ft_lstiter.c ft_lstmap.c ft_lstnew.c ft_memalloc.c\
-ft_memccpy.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memdel.c ft_memmove.c\
-ft_memset.c ft_power.c ft_putchar.c ft_putchar_fd.c ft_putendl.c\
-ft_putendl_fd.c ft_putnbr.c ft_putnbr_fd.c ft_putstr.c ft_putstr_fd.c\
-ft_sort_arr.c ft_sqrt.c ft_strcat.c ft_strchr.c ft_strclr.c ft_strcmp.c\
-ft_strcpy.c ft_strdel.c ft_strdup.c ft_strequ.c ft_striter.c ft_striteri.c\
-ft_strjoin.c ft_strlcat.c ft_strlen.c ft_strmap.c ft_strmapi.c ft_strncat.c\
-ft_strncmp.c ft_strncpy.c ft_strnequ.c ft_strnew.c ft_strnstr.c ft_strrchr.c\
-ft_strsplit.c ft_strstr.c ft_strsub.c ft_strtrim.c ft_swap.c ft_tolower.c\
-ft_toupper.c
+SRCS = 	ft_atoi.c\
+		ft_lstdelone.c\
+		ft_memmove.c\
+		ft_memdel.c\
+		ft_strcat.c\
+		ft_strjoin.c\
+		ft_strnstr.c\
+		ft_bzero.c\
+		ft_lstiter.c\
+		ft_memset.c\
+		ft_strchr.c\
+		ft_strlcat.c\
+		ft_strrchr.c\
+		ft_isalnum.c\
+		ft_lstmap.c\
+		ft_putchar.c\
+		ft_strclr.c\
+		ft_strlen.c\
+		ft_strsplit.c\
+		ft_isalpha.c\
+		ft_lstnew.c\
+		ft_putchar_fd.c\
+		ft_strcmp.c\
+		ft_strmap.c\
+		ft_strstr.c\
+		ft_isascii.c\
+		ft_memalloc.c\
+		ft_putendl.c\
+		ft_strcpy.c\
+		ft_strmapi.c\
+		ft_strsub.c\
+		ft_isdigit.c\
+		ft_memccpy.c\
+		ft_putendl_fd.c\
+		ft_strdel.c\
+		ft_strncat.c\
+		ft_strtrim.c\
+		ft_isprint.c\
+		ft_memchr.c\
+		ft_putnbr.c\
+		ft_strdup.c\
+		ft_strncmp.c\
+		ft_tolower.c\
+		ft_itoa.c\
+		ft_memcmp.c\
+		ft_putnbr_fd.c\
+		ft_strequ.c\
+		ft_strncpy.c\
+		ft_toupper.c\
+		ft_lstadd.c\
+		ft_memcpy.c\
+		ft_putstr.c\
+		ft_striter.c\
+		ft_strnequ.c\
+		ft_lstdel.c\
+		ft_putstr_fd.c\
+		ft_striteri.c\
+		ft_strnew.c\
+		ft_iswhitespace.c\
+		ft_abs.c\
+		ft_factorial.c\
+		ft_pow.c\
+		ft_sqrt.c
 
+OBJS = $(SRCS:.c=.o)
 
-OBJ = $(SRCC:.c=.o)
+FLAGS = -Wall -Werror -Wextra
+
+OPT = -c
 
 all: $(NAME)
 
 $(NAME):
-	@gcc -c $(FLAGS) $(SRCC) -Iincludes
-	@ar rc $(NAME) $(OBJ)
+	@gcc $(FLAGS) $(OPT) $(SRCS)
+	@ar rc $(NAME) $(OBJS)
 
 clean:
-	@/bin/rm -rf *.o
+	@/bin/rm -f $(OBJS)
 
 fclean: clean
-	@/bin/rm -rf $(NAME)
+	@/bin/rm -f $(NAME)
 
-re: fclean all
+re:	fclean all
