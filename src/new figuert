@@ -1,4 +1,0 @@
-oc = Subtract(O, sph->center);
-  double k1 = dot(D, D) - (1 + sph->k * sph->k) * pow((dot(D, sph->v_n_a)), 2.0);
-  double k2 = 2.0 * ((dot(oc, D) - (1 + sph->k * sph->k) * (dot(oc, sph->v_n_a) * dot (D, sph->v_n_a))));
-  double k3 = dot(oc, oc) - (1 + sph->k * sph->k) *pow(dot(oc, sph->v_n_a), 2.0) - r * r;
